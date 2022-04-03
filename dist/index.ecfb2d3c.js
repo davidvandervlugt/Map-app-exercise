@@ -559,12 +559,13 @@ function clearValues() {
     document.getElementById("place").value = null;
     document.getElementById("review").value = null;
 }
+//Event handler functions
 function setAddMarkerEventHandler() {
     const submitButton = document.querySelector(".submit-button");
     submitButton.addEventListener("click", function() {
         submitMarker();
     });
-}
+} // function setDeleteMarkerEventHandler
 
 },{"./views/map":"5JeM8","@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM","./views/layout":"cuu68","./views/sidebar":"5dVoN","./model":"a7MfR"}],"5JeM8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");

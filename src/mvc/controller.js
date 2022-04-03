@@ -45,9 +45,12 @@ function clearValues() {
   document.getElementById("review").value = null;
 }
 
+//Event handler functions
 function setAddMarkerEventHandler() {
   const submitButton = document.querySelector(".submit-button");
   submitButton.addEventListener("click", function () {
     submitMarker();
   });
 }
+
+// function setDeleteMarkerEventHandler
