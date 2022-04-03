@@ -6,6 +6,6 @@ export let store = {
     },
     "properties": {
       "name": "Dinagat Islands",
-      "star count"
+      "star count": 5,
     }
   }
