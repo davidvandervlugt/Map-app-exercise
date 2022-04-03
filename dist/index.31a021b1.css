@@ -22,7 +22,9 @@ body {
 }
 
 .input-wrapper {
+  flex-direction: column;
   padding-top: 10px;
+  display: flex;
 }
 
 .submit-button {

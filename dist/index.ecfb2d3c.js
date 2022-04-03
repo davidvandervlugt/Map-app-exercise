@@ -549,7 +549,15 @@ function submitMarker() {
     const coordinates = document.getElementById("coordinates").value.split(", ");
     const place = document.getElementById("place").value;
     const review = document.getElementById("review").value;
-    if (coordinates) _map.addMarker(controllerMap, coordinates, place, review);
+    if (coordinates.length === 2 && place.length > 0 && review.length !== null) {
+        _map.addMarker(controllerMap, coordinates, place, review);
+        clearValues();
+    } else window.alert("Fill in all values correctly");
+}
+function clearValues() {
+    document.getElementById("coordinates").value = null;
+    document.getElementById("place").value = null;
+    document.getElementById("review").value = null;
 }
 function setAddMarkerEventHandler() {
     const submitButton = document.querySelector(".submit-button");
@@ -580,7 +588,6 @@ function renderMap(coordinates) {
     return setMap;
 }
 function addMarker(map, coordinates, place, review) {
-    console.log(typeof coordinates);
     let marker = _leaflet.marker(coordinates).addTo(map);
     marker.bindPopup(`<b>${place}</b><br>${review} stars`).openPopup();
 }
@@ -15266,7 +15273,7 @@ function renderSidebar() {
     </div>
     <div class=input-wrapper>
         <label>Review (1-5)</label>
-        <input type='text' id='review'></input>
+        <input type='number' min='1' max='5' id='review'></input>
     </div>
     <div class=input-wrapper>
         <label>Longitude, latitude</label>

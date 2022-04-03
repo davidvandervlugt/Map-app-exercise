@@ -20,7 +20,6 @@ export function renderMap(coordinates) {
 }
 
 export function addMarker(map, coordinates, place, review) {
-  console.log(typeof coordinates);
   let marker = L.marker(coordinates).addTo(map);
   marker.bindPopup(`<b>${place}</b><br>${review} stars`).openPopup();
 }

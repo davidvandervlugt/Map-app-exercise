@@ -9,7 +9,7 @@ export default function renderSidebar() {
     </div>
     <div class=input-wrapper>
         <label>Review (1-5)</label>
-        <input type='text' id='review'></input>
+        <input type='number' min='1' max='5' id='review'></input>
     </div>
     <div class=input-wrapper>
         <label>Longitude, latitude</label>

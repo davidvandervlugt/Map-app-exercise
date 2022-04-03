@@ -33,7 +33,16 @@ function submitMarker() {
   const place = document.getElementById("place").value;
   const review = document.getElementById("review").value;
 
-  if (coordinates) addMarker(controllerMap, coordinates, place, review);
+  if (coordinates.length === 2 && place.length > 0 && review.length !== null) {
+    addMarker(controllerMap, coordinates, place, review);
+    clearValues();
+  } else window.alert("Fill in all values correctly");
+}
+
+function clearValues() {
+  document.getElementById("coordinates").value = null;
+  document.getElementById("place").value = null;
+  document.getElementById("review").value = null;
 }
 
 function setAddMarkerEventHandler() {
