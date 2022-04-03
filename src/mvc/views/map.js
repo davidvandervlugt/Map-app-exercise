@@ -1,8 +1,8 @@
 import * as L from "leaflet";
 import "../../../node_modules/leaflet/dist/leaflet";
 
-export default function renderMap() {
-  const map = L.map("map").setView([51.505, -0.09], 13);
+export function renderMap(coordinates) {
+  setMap = L.map("map").setView(coordinates, 8);
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
     {
@@ -15,7 +15,12 @@ export default function renderMap() {
       accessToken:
         "pk.eyJ1IjoiZGF2aWR2ZHZsdWd0IiwiYSI6ImNsMWV5OHd3cDAwcm0zY3BmNjAxN2Rid3gifQ.Q31unUZudwzeqVxGEUTtBg",
     }
-  ).addTo(map);
-  let marker = L.marker([51.5, -0.09]).addTo(map);
-  marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+  ).addTo(setMap);
+  return setMap;
+}
+
+export function addMarker(map, coordinates, place, review) {
+  console.log(typeof coordinates);
+  let marker = L.marker(coordinates).addTo(map);
+  marker.bindPopup(`<b>${place}</b><br>${review} stars`).openPopup();
 }

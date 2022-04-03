@@ -523,32 +523,52 @@ main();
 },{"./mvc/controller":"9cc20"}],"9cc20":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+//initialization
 parcelHelpers.export(exports, "init", ()=>init
-) //retrieve geojson from model
- //function for adding data to geojson, and then rerending view
-;
+);
+var _model = require("./model");
 var _layout = require("./views/layout");
 var _layoutDefault = parcelHelpers.interopDefault(_layout);
 var _sidebar = require("./views/sidebar");
 var _sidebarDefault = parcelHelpers.interopDefault(_sidebar);
 var _map = require("./views/map");
-var _mapDefault = parcelHelpers.interopDefault(_map);
+//variables
+let controllerMap = null;
 function init() {
     _layoutDefault.default();
     _sidebarDefault.default();
-    _mapDefault.default();
+    controllerMap = _map.renderMap(_model.mapcoordinates);
+    renderMapPoints();
+    setAddMarkerEventHandler();
+}
+//controller functions
+function renderMapPoints() {
+    for(let i in _model.store)_map.addMarker(controllerMap, _model.store[i].geometry.coordinates, _model.store[i].properties.name, _model.store[i].properties.review);
+}
+function submitMarker() {
+    const coordinates = document.getElementById("coordinates").value.split(", ");
+    const place = document.getElementById("place").value;
+    const review = document.getElementById("review").value;
+    if (coordinates) _map.addMarker(controllerMap, coordinates, place, review);
+}
+function setAddMarkerEventHandler() {
+    const submitButton = document.querySelector(".submit-button");
+    submitButton.addEventListener("click", function() {
+        submitMarker();
+    });
 }
 
-},{"./views/map":"5JeM8","@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM","./views/layout":"cuu68","./views/sidebar":"5dVoN"}],"5JeM8":[function(require,module,exports) {
+},{"./views/map":"5JeM8","@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM","./views/layout":"cuu68","./views/sidebar":"5dVoN","./model":"a7MfR"}],"5JeM8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderMap", ()=>renderMap
+);
+parcelHelpers.export(exports, "addMarker", ()=>addMarker
+);
 var _leaflet = require("leaflet");
 var _leaflet1 = require("../../../node_modules/leaflet/dist/leaflet");
-function renderMap() {
-    const map = _leaflet.map("map").setView([
-        51.505,
-        -0.09
-    ], 13);
+function renderMap(coordinates) {
+    setMap = _leaflet.map("map").setView(coordinates, 8);
     _leaflet.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -556,14 +576,14 @@ function renderMap() {
         tileSize: 512,
         zoomOffset: -1,
         accessToken: "pk.eyJ1IjoiZGF2aWR2ZHZsdWd0IiwiYSI6ImNsMWV5OHd3cDAwcm0zY3BmNjAxN2Rid3gifQ.Q31unUZudwzeqVxGEUTtBg"
-    }).addTo(map);
-    let marker = _leaflet.marker([
-        51.5,
-        -0.09
-    ]).addTo(map);
-    marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    }).addTo(setMap);
+    return setMap;
 }
-exports.default = renderMap;
+function addMarker(map, coordinates, place, review) {
+    console.log(typeof coordinates);
+    let marker = _leaflet.marker(coordinates).addTo(map);
+    marker.bindPopup(`<b>${place}</b><br>${review} stars`).openPopup();
+}
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM","leaflet":"lG0NN","../../../node_modules/leaflet/dist/leaflet":"cuZL1"}],"e7AJM":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -15241,20 +15261,49 @@ function renderSidebar() {
     <h1>My Places</h1>
     <h3>Best places I know</h3>
     <div class=input-wrapper>
-        <label class='place'>Place name</label>
-        <input type='text' name='place'></input>
+        <label>Place name</label>
+        <input type='text' id='place'></input>
     </div>
     <div class=input-wrapper>
-        <label class='stars'>Review (1-5)</label>
-        <input type='text' name='stars'></input>
+        <label>Review (1-5)</label>
+        <input type='text' id='review'></input>
     </div>
     <div class=input-wrapper>
-        <label class='coordinates'>Longitude, latitude</label>
-        <input type='text' name='coordinates'></input>
+        <label>Longitude, latitude</label>
+        <input type='text' id='coordinates'></input>
     </div>
+    <button class='submit-button'>Add marker</button>
   `;
 }
 exports.default = renderSidebar;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM"}],"a7MfR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mapcoordinates", ()=>mapcoordinates
+);
+parcelHelpers.export(exports, "store", ()=>store
+);
+let mapcoordinates = [
+    52.34448006633993,
+    5.2590079118926605
+];
+let store = [
+    {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: [
+                52.4581838904908,
+                4.617776888446131
+            ]
+        },
+        properties: {
+            name: "IJmuiden",
+            review: 5
+        }
+    }, 
+];
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"e7AJM"}]},["dkBhe","d3AqK"], "d3AqK", "parcelRequire94c2")
 

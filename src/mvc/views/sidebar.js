@@ -4,16 +4,17 @@ export default function renderSidebar() {
     <h1>My Places</h1>
     <h3>Best places I know</h3>
     <div class=input-wrapper>
-        <label class='place'>Place name</label>
-        <input type='text' name='place'></input>
+        <label>Place name</label>
+        <input type='text' id='place'></input>
     </div>
     <div class=input-wrapper>
-        <label class='stars'>Review (1-5)</label>
-        <input type='text' name='stars'></input>
+        <label>Review (1-5)</label>
+        <input type='text' id='review'></input>
     </div>
     <div class=input-wrapper>
-        <label class='coordinates'>Longitude, latitude</label>
-        <input type='text' name='coordinates'></input>
+        <label>Longitude, latitude</label>
+        <input type='text' id='coordinates'></input>
     </div>
+    <button class='submit-button'>Add marker</button>
   `;
 }
